@@ -1,8 +1,7 @@
-<!DOCTYPE html>
 {% extends 'base.html' %}
 
 {% load static %}
-<html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -170,8 +169,6 @@
 							</div>
 						</div>
 					</div>
-
-
 				</div>
 			</div>
 		</div>
@@ -190,7 +187,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="row mastersSlider">
 					<div class="col-md-3">
 						<div class="cardBlock masters__block">
@@ -330,9 +326,6 @@
 							</div>
 						</div>
 					</div>
-
-
-
 				</div>
 			</div>
 		</div>
@@ -424,10 +417,6 @@
 							<div class="reviews__block_date">1 октября 2022</div>
 						</div>
 					</div>
-
-
-
-
 				</div>
 			</div>
 		</div>
@@ -446,7 +435,6 @@
 									<input type="text" name="tel" class="contacts__form_iunput" placeholder="+7(999)999--99-99" required>
 								</div>
 							</div>
-
 							<textarea name="contactsTextarea" class="contacts__form_textarea" placeholder="Вопрос(необязательно)"></textarea>
 							<div class="contacts__form_checkboxBlock fic">
 								<input type="checkbox" class="contacts__form_checkbox" checked>
@@ -507,9 +495,8 @@
 			</div>
 		</div>
 	</section>
-
 	{% endblock content %}
-
+	{% block scripts %}
 	<div style="display: none;">
 		<div class="box-modal authPopup popup" id="authModal">
 			<div class="box-modal_close arcticmodal-close"><img src="img/x.svg" alt="x"></div>
@@ -551,5 +538,6 @@
 	<script src="{% static 'js/air-datepicker.js' %}"></script>
 	<script src="{% static 'js/jquery.arcticmodal-0.3.min.js' %}"></script>
 	<script src="{% static 'js/main.js' %}"></script>
+	{% endblock scripts %}
 </body>
 </html>
