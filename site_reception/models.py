@@ -52,8 +52,7 @@ class Master(models.Model):
     service = models.ManyToManyField(
         Service,
         verbose_name='Услуги предоставляемые мастером',
-        related_name='services',
-        blank=True
+        related_name='services'
     )
 
     def __str__(self):
