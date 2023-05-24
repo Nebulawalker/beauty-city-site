@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Client, Service, Master
+from .models import Client, Service, Master, Saloon, Order
 
 
 @admin.register(Client)
@@ -28,6 +28,30 @@ class ServicesInline(admin.TabularInline):
 class MasterAdmin(admin.ModelAdmin):
     list_display = ('name', )
     search_fields = ('name', )
-    raw_id_fields = ('service', )
+    # raw_id_fields = ('service', )
     list_filter = ('service', )
-    inlines = [ServicesInline]
+    # inlines = [ServicesInline]
+
+
+class MasterInline(admin.TabularInline):
+    model = Saloon.master.through
+
+
+@admin.register(Saloon)
+class SaloonAdmin(admin.ModelAdmin):
+    list_display = ('title', 'address')
+    search_fields = ('title', )
+    # raw_id_fields = ('master', )
+    # inlines = [MasterInline]
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = (
+        'created_at',
+        'saloon',
+        'service',
+        'client',
+        'master',
+    )
+    raw_id_fields = ('client', )

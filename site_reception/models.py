@@ -120,8 +120,8 @@ class Order(models.Model):
         editable=False
     )
 
-    def __str__(self):
-        return f'{self.title}, {self.address}'
+    # def __str__(self):
+    #     return f'{self.created_at}, {self.ser}'
 
     class Meta:
         verbose_name = 'Запись'
