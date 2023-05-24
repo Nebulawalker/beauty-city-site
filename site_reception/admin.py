@@ -19,9 +19,15 @@ class ServiceAdmin(admin.ModelAdmin):
     list_editable = ('duration', 'price')
 
 
+class ServicesInline(admin.TabularInline):
+    model = Master.service.through
+    list_display = ('title')
+
+
 @admin.register(Master)
 class MasterAdmin(admin.ModelAdmin):
     list_display = ('name', )
     search_fields = ('name', )
     raw_id_fields = ('service', )
     list_filter = ('service', )
+    inlines = [ServicesInline]
