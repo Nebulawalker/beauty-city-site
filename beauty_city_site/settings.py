@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'beauty_city_site',
     'site_reception.apps.SiteReceptionConfig',
     'debug_toolbar',
 ]
