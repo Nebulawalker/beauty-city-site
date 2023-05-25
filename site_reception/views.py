@@ -16,4 +16,9 @@ def index(request):
 
 
 def service(request):
-    return render(request, 'service.html')
+    context = {
+        'masters': get_masters(),
+        'saloon': get_saloons()[0],
+        'services': get_services(),
+    }
+    return render(request, 'service.html', context)
