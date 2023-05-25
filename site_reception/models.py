@@ -196,3 +196,48 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Запись'
         verbose_name_plural = 'Записи'
+
+
+class Review(models.Model):
+    client = models.ForeignKey(
+        Client,
+        verbose_name='Автор отзыва',
+        related_name='author',
+        on_delete=models.RESTRICT
+    )
+
+    master = models.ForeignKey(
+        Master,
+        verbose_name='Мастер',
+        related_name='review_master',
+        on_delete=models.RESTRICT
+    )
+
+    text = models.TextField(
+        verbose_name='Текст отзыва'
+    )
+
+    STARS = [
+        (1, '1 звезда'),
+        (2, '2 звезды'),
+        (3, '3 звезды'),
+        (4, '4 звезды'),
+        (5, '5 звезд')
+    ]
+
+    star = models.IntegerField(
+        verbose_name='Оценка',
+        choices=STARS,
+        default=1
+    )
+
+    created_at = models.DateTimeField(
+        verbose_name='Когда написан отзыв',
+        default=timezone.now,
+        db_index=True,
+        editable=False
+    )
+
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'

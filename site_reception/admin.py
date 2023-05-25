@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Client, Service, Master, Saloon, Order
+from .models import Client, Service, Master, Saloon, Order, Review
 
 
 @admin.register(Client)
@@ -55,3 +55,12 @@ class OrderAdmin(admin.ModelAdmin):
         'master',
     )
     raw_id_fields = ('client', )
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = (
+        'client',
+        'star',
+        'text',
+        'master',
+    )
