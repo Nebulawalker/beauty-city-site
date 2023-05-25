@@ -13,3 +13,7 @@ def index(request):
         print(service.photo.path)
 
     return render(request, 'index.html')
+
+
+def service(request):
+    return render(request, 'service.html')

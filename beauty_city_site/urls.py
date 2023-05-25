@@ -20,6 +20,7 @@ from site_reception import views
 
 urlpatterns = [
     path('', views.index, name='Главная'),
+    path('service.html', views.service, name='service'),
     path('admin/', admin.site.urls),
     path('__debug__/', include('debug_toolbar.urls')),
 ]
