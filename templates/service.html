@@ -61,6 +61,7 @@
 						<div class="panel">
 							{% for master in masters %}
 								<div class="accordion__block fic">
+									<img src="{{ master.photo.url }}" alt="avatar" class="accordion__block_img">
 									<div class="accordion__block_intro">{{ master.name }}</div>
 									<div class="accordion__block_address">{{ service.price }}</div>
 								</div>
