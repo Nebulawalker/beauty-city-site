@@ -35,6 +35,12 @@ class Service(models.Model):
         decimal_places=2
     )
 
+    photo = models.FileField(
+        verbose_name='Изображение для услуги',
+        upload_to='service_images/',
+        null=True, blank=True
+    )
+
     def __str__(self):
         return f'{self.title}'
 
@@ -53,6 +59,12 @@ class Master(models.Model):
         Service,
         verbose_name='Услуги предоставляемые мастером',
         related_name='services'
+    )
+
+    photo = models.FileField(
+        verbose_name='Фото мастера',
+        upload_to='master_images/',
+        null=True, blank=True
     )
 
     def __str__(self):
@@ -78,6 +90,12 @@ class Saloon(models.Model):
         verbose_name='Мастера в салоне',
         related_name='saloons',
         blank=True
+    )
+
+    photo = models.FileField(
+        verbose_name='Фото салона',
+        upload_to='saloon_images/',
+        null=True, blank=True
     )
 
     def __str__(self):
