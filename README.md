@@ -35,6 +35,7 @@ ALLOWED_HOSTS=127.0.0.1
 ```
 Доступны 3 переменные:
 - `DEBUG` — дебаг-режим. Поставьте True, чтобы увидеть отладочную информацию в случае ошибки.
+  В случае если `DEBUG = True`, используется тестовая база данных `test_db.sqlite3`
 - `SECRET_KEY` — секретный ключ проекта
 - `ALLOWED_HOSTS` — см [документацию Django](https://docs.djangoproject.com/en/3.1/ref/settings/#allowed-hosts).
 
