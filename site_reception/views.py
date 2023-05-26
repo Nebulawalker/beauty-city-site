@@ -15,9 +15,14 @@ def index(request):
     return render(request, 'index.html')
 
 
-def service(request):
-    return render(request, 'service.html')
-
-
 def service_finally(request):
     return render(request, 'serviceFinally.html')
+
+def service(request):
+    context = {
+        'masters': get_masters(),
+        'saloon': get_saloons()[0],
+        'services': get_services(),
+    }
+    return render(request, 'service.html', context)
+
