@@ -22,3 +22,4 @@ def service(request):
         'services': get_services(),
     }
     return render(request, 'service.html', context)
+
