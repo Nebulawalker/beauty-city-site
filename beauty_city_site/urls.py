@@ -21,6 +21,7 @@ from site_reception import views
 urlpatterns = [
     path('', views.index, name='Главная'),
     path('service.html', views.service, name='service'),
+    path('serviceFinally.html', views.service_finally, name='service_finally'),
     path('admin/', admin.site.urls),
     path('__debug__/', include('debug_toolbar.urls')),
 ]
