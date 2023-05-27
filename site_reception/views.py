@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .orm_commands import *
+from .orm_commands import get_saloons, get_masters, get_services, get_reviews
 
 
 def index(request):
@@ -10,7 +10,7 @@ def index(request):
 
     masters = []
     for master in get_masters():
-        master_properties = {'name': master.name, 'photo': master.photo.url}    # Докинуть отзывы и стаж работы
+        master_properties = {'name': master.name, 'photo': master.photo.url}  # Докинуть отзывы и стаж работы
         masters.append(master_properties)
 
     services = []
@@ -18,6 +18,16 @@ def index(request):
         service_properties = {'title': service.title, 'price': service.price, 'photo': service.photo.url}
         services.append(service_properties)
 
-    context = {'saloons': saloons, 'masters': masters, 'services': services}
+    reviews = []
+    for review in get_reviews():
+        review_properties = {
+            'client_name': review.client.name,
+            'text': review.text,
+            'rating': review.star,
+            'created_at': review.created_at
+        }
+        reviews.append(review_properties)
+
+    context = {'saloons': saloons, 'masters': masters, 'services': services, 'reviews': reviews}
 
     return render(request, 'index.html', context=context)
