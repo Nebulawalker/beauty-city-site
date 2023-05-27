@@ -16,9 +16,24 @@ def index(request):
 
 
 def service(request):
-    context = {
-        'masters': get_masters(),
-        'saloon': get_saloons()[0],
-        'services': get_services(),
-    }
-    return render(request, 'service.html', context)
+    if request.method == 'POST':
+        saloon_title = request.POST.get('saloon_title')
+        service_title = request.POST.get('service_title')
+
+        if saloon_title:
+            saloon = get_saloons().filter(title__contains=saloon_title).first()
+            context = {
+                'saloon': saloon,
+                'services': get_services(),
+                'masters': get_masters().filter(saloons=saloon)
+            }
+
+        return render(request, 'service.html', context)
+    else:
+        context = {
+            'saloons': get_saloons(),
+            'services': get_services(),
+            'masters': get_masters(),
+            'time_slots': get_time_slots(),
+        }
+        return render(request, 'service.html', context)

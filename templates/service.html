@@ -32,15 +32,26 @@
 					<button class="service__btn btn">Запись по телефону</button>
 				</div>
 
-				<form action="#" class="service__form">
-
+				<form action="#" class="service__form" method="POST">
+					{% csrf_token %}
 					<div class="service__form_block service__salons">
-						<button class="accordion">(Выберите салон)</button>
+
+						{% if saloons %}
+							<button class="accordion">(Выберите салон)</button>
+						{% else %}
+							<button class="accordion">({{ saloon.title }})</button>
+						{% endif %}
+
 						<div class="panel">
-						  <div class="accordion__block fic">
-						  	<div class="accordion__block_intro">{{ saloon.title }}</div>
-						  	<div class="accordion__block_address">{{ saloon.address }}</div>
-						  </div>
+							{% for saloon in saloons %}
+							<div class="accordion__block fic">
+								<button class="accordion__block_intro" name="saloon_title" value="{{ saloon.title }}" type="submit">
+									{{ saloon.title }}
+								</button>
+								<!-- <div class="accordion__block_intro">{{ saloon.title }}</div> -->
+								<div class="accordion__block_address">{{ saloon.address }}</div>
+							</div>
+							{% endfor %}
 						</div>
 					</div>
 
@@ -82,34 +93,30 @@
 						<div class="col-md-4">
 							<div id="datepickerHere"></div>
 						</div>
+
 						<div class="col-md-8">
 							<div class="time__elems">
-								<div class="time__items">
+
+								<!-- <div class="time__items">
 									<div class="time__elems_intro">Утро</div>
 									<div class="time__elems_elem fic">
 										<button data-time="10:00" class="time__elems_btn">10:00</button>
 										<button data-time="10:30" class="time__elems_btn">10:30</button>
 									</div>
-								</div>
-								<div class="time__items">
-									<div class="time__elems_intro">День</div>
+								</div> -->
+
+								{% for daytime, times in time_slots.items %}
+									<div class="time__elems_intro">{{ daytime }}</div>
 									<div class="time__elems_elem fic">
-										<button data-time="12:00" class="time__elems_btn">12:00</button>
-										<button data-time="12:30" class="time__elems_btn">12:30</button>
-										<button data-time="15:00" class="time__elems_btn">15:00</button>
-										<button data-time="16:30" class="time__elems_btn">16:30</button>
+										{% for time in times %}
+											<button data-time="10:00" class="time__elems_btn">{{ time }}</button>
+										{% endfor %}
 									</div>
-								</div>
-								<div class="time__items">
-									<div class="time__elems_intro">Вечер</div>
-									<div class="time__elems_elem fic">
-										<button data-time="17:00" class="time__elems_btn">17:00</button>
-										<button data-time="18:30" class="time__elems_btn">18:30</button>
-										<button data-time="19:00" class="time__elems_btn">19:00</button>
-									</div>
-								</div>
+								{% endfor %}
+
 							</div>
 						</div>
+
 					</div>
 				</div>
 				<div class="time__btns">
