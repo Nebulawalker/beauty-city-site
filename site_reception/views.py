@@ -17,7 +17,7 @@ def index(request):
     for service in get_services():
         service_properties = {'title': service.title, 'price': service.price, 'photo': service.photo.url}
         services.append(service_properties)
-
+        
     reviews = []
     for review in get_reviews():
         review_properties = {
@@ -30,4 +30,16 @@ def index(request):
 
     context = {'saloons': saloons, 'masters': masters, 'services': services, 'reviews': reviews}
 
-    return render(request, 'index.html', context=context)
+    return render(request, 'index.html', context)
+
+
+def service_finally(request):
+    return render(request, 'serviceFinally.html')
+
+def service(request):
+    context = {
+        'masters': get_masters(),
+        'saloon': get_saloons()[0],
+        'services': get_services(),
+    }
+    return render(request, 'service.html', context)
