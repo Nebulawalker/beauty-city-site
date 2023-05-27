@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .orm_commands import *
+from django.http import HttpResponse
 
 
 def index(request):
@@ -15,20 +16,17 @@ def index(request):
     return render(request, 'index.html')
 
 
+def service_finally(request):
+    return render(request, 'serviceFinally.html')
+
+
 def service(request):
     if request.method == 'POST':
-        saloon_title = request.POST.get('saloon_title')
-        service_title = request.POST.get('service_title')
+        saloon_title = request.POST.get('saloon')
+        service_name = request.POST.get('service')
+        master_name = request.POST.get('master')
+        return HttpResponse(f'{saloon_title}, {service_name}, {master_name}')
 
-        if saloon_title:
-            saloon = get_saloons().filter(title__contains=saloon_title).first()
-            context = {
-                'saloon': saloon,
-                'services': get_services(),
-                'masters': get_masters().filter(saloons=saloon)
-            }
-
-        return render(request, 'service.html', context)
     else:
         context = {
             'saloons': get_saloons(),
@@ -37,3 +35,8 @@ def service(request):
             'time_slots': get_time_slots(),
         }
         return render(request, 'service.html', context)
+
+# timeslots = []
+# orders = Order.objects.filter(Saloon=saloon & master=master & service=service)
+# for order in orders:
+#     timeslots.append(order.time)

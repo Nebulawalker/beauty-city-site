@@ -1,0 +1,19 @@
+<div class="col-md-8">
+	<!-- <div class="time__items">
+		<div class="time__elems_intro">Утро</div>
+		<div class="time__elems_elem fic">
+			<button data-time="10:00" class="time__elems_btn">10:00</button>
+			<button data-time="10:30" class="time__elems_btn">10:30</button>
+		</div>
+	</div> -->
+	<div class="time__elems">
+		{% for daytime, times in time_slots.items %}
+		<div class="time__elems_intro">{{ daytime }}</div>
+		<div class="time__elems_elem fic">
+			{% for time in times %}
+			<button data-time="10:00" class="time__elems_btn">{{ time }}</button>
+			{% endfor %}
+		</div>
+		{% endfor %}
+	</div>
+</div>
