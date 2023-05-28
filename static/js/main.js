@@ -125,7 +125,12 @@ $(document).ready(function() {
 		$('#mobMenu').hide()
 	})
 
-	new AirDatepicker('#datepickerHere')
+	// new AirDatepicker('#datepickerHere')
+
+	new AirDatepicker('#datepickerHere', {
+		minDate: new Date(),
+		inline: true
+	})
 
 	var acc = document.getElementsByClassName("accordion");
 	var i;
@@ -311,7 +316,7 @@ $(document).ready(function() {
 			
 		}
 
-		$(this).parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' +thisAddress)
+		$(this).parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' +thisAddress).value(thisName)
 		setTimeout(() => {
 			$(this).parent().parent().find('> button.active').click()
 		}, 200)
@@ -338,7 +343,7 @@ $(document).ready(function() {
 
 
 
-	// 	console.log($('.service__masters > .panel').attr('data-masters'))
+		console.log($('.service__masters > .panel').attr('data-masters'))
 	// if($('.service__salons .accordion.selected').text() === "BeautyCity Пушкинская  ул. Пушкинская, д. 78А") {
 	// }
 

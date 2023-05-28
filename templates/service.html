@@ -3,130 +3,148 @@
 {% load static %}
 
 {% block head %}
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Beauty City</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty City</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css.map">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css.map"> -->
-	<link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
-	<link rel="stylesheet" href="{% static 'css/air-datepicker.css' %}">
-	<script src="{% static 'js/air-datepicker.js' %}"></script>
-	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css.map"> -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/air-datepicker.css' %}">
+    <script src="{% static 'js/air-datepicker.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 {% endblock %}
 
 
 {% block content %}
-	<section id="service">
-		<div class="container">
-			<div class="service">
-				<div class="breadCrumbs">
-					<a href="/" class="breadCrumbs__item">На главную</a>
-				</div>
-				<div class="service__block">
-					<h1 class="service__title">Запись на услугу</h1>
-					<button class="service__btn btn">Запись по телефону</button>
-				</div>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+    <section id="service">
+        <div class="container">
+            <div class="service">
+                <div class="breadCrumbs">
+                    <a href="/" class="breadCrumbs__item">На главную</a>
+                </div>
+                <div class="service__block">
+                    <h1 class="service__title">Запись на услугу</h1>
+                    <button class="service__btn btn">Запись по телефону</button>
+                </div>
 
-				<form action="#" class="service__form">
+                    <div class="">
+                        <button class="accordion">(Выберите салон)</button>
+                        <div class="panel">
+                          <div class="accordion__block fic">
+                              <div class="accordion__block_intro">{{ saloon.title }}</div>
+                              <div class="accordion__block_address">{{ saloon.address }}</div>
+                              
+                          </div>
+                        </div>
+                    </div>
 
-					<div class="service__form_block service__salons">
-						<button class="accordion">(Выберите салон)</button>
-						<div class="panel">
-						  <div class="accordion__block fic">
-						  	<div class="accordion__block_intro">{{ saloon.title }}</div>
-						  	<div class="accordion__block_address">{{ saloon.address }}</div>
-						  </div>
-						</div>
-					</div>
+                    <div class="">
+                        <button class="accordion">(Выберите услугу)</button>
+                        <div class="panel">
+                            {% for service in services %}
+                                <div class="accordion__block fic">
+                                    <div class="accordion__block_intro">{{ service.title }} </div>
+                                    <div class="accordion__block_address">{{ service.price }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
 
-					<div class="service__form_block service__services">
-						<button class="accordion">(Выберите услугу)</button>
-						<div class="panel">
-							{% for service in services %}
-								<div class="accordion__block fic">
-									<div class="accordion__block_intro">{{ service.title }}</div>
-									<div class="accordion__block_address">{{ service.price }}</div>
-								</div>
-							{% endfor %}
-						</div>
-					</div>
+                    <div class="">
+                        <button class="accordion">(Выберите мастера)</button>
+                        <div class="panel">
+                            {% for master in masters %}
+                                <div class="accordion__block fic">
+                                    <img src="{{ master.photo.url }}" alt="avatar" class="accordion__block_img">
+                                    <div class="accordion__block_intro">{{ master.name }}</div>
+                                    <input type='text' name='master' value = '{{ master.name }}' hidden="True" style="margin-bottom: 20px;"/>
+                                    
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                
 
-					<div class="service__form_block service__masters">
-						<button class="accordion">(Выберите мастера)</button>
-						<div class="panel">
-							{% for master in masters %}
-								<div class="accordion__block fic">
-									<img src="{{ master.photo.url }}" alt="avatar" class="accordion__block_img">
-									<div class="accordion__block_intro">{{ master.name }}</div>
-									<div class="accordion__block_address">{{ service.price }}</div>
-								</div>
-							{% endfor %}
-						</div>
-					</div>
+            </div>
+        </div>
+    </section>
+    <section id="time">
+        <div class="container">
+            <div class="time">
+                <h2 class="time__title">Выберите время</h2>
+                <div class="time__block">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type='text' name='date' id='datepickerHere' hidden="True" style="margin-bottom: 20px;"/>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="time__elems">
+                                <div class="time__items">
+                                    <div class="time__elems_intro">Утро</div>
+                                    <div class="time__elems_elem fic">
+                                        <button data-time="10:00" class="time__elems_btn">10:00</button>
+                                        <button data-time="10:30" class="time__elems_btn">10:30</button>
+                                    </div>
+                                </div>
+                                <div class="time__items">
+                                    <div class="time__elems_intro">День</div>
+                                    <div class="time__elems_elem fic">
+                                        <button data-time="12:00" class="time__elems_btn">12:00</button>
+                                        <button data-time="12:30" class="time__elems_btn">12:30</button>
+                                        <button data-time="15:00" class="time__elems_btn">15:00</button>
+                                        <button data-time="16:30" class="time__elems_btn">16:30</button>
+                                    </div>
+                                </div>
+                                <div class="time__items">
+                                    <div class="time__elems_intro">Вечер</div>
+                                    <div class="time__elems_elem fic">
+                                        <button data-time="17:00" class="time__elems_btn">17:00</button>
+                                        <button data-time="18:30" class="time__elems_btn">18:30</button>
+                                        <button data-time="19:00" class="time__elems_btn">19:00</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-				</form>
-			</div>
-		</div>
-	</section>
-	<section id="time">
-		<div class="container">
-			<div class="time">
-				<h2 class="time__title">Выберите время</h2>
-				<div class="time__block">
-					<div class="row">
-						<div class="col-md-4">
-							<div id="datepickerHere"></div>
-						</div>
-						<div class="col-md-8">
-							<div class="time__elems">
-								<div class="time__items">
-									<div class="time__elems_intro">Утро</div>
-									<div class="time__elems_elem fic">
-										<button data-time="10:00" class="time__elems_btn">10:00</button>
-										<button data-time="10:30" class="time__elems_btn">10:30</button>
-									</div>
-								</div>
-								<div class="time__items">
-									<div class="time__elems_intro">День</div>
-									<div class="time__elems_elem fic">
-										<button data-time="12:00" class="time__elems_btn">12:00</button>
-										<button data-time="12:30" class="time__elems_btn">12:30</button>
-										<button data-time="15:00" class="time__elems_btn">15:00</button>
-										<button data-time="16:30" class="time__elems_btn">16:30</button>
-									</div>
-								</div>
-								<div class="time__items">
-									<div class="time__elems_intro">Вечер</div>
-									<div class="time__elems_elem fic">
-										<button data-time="17:00" class="time__elems_btn">17:00</button>
-										<button data-time="18:30" class="time__elems_btn">18:30</button>
-										<button data-time="19:00" class="time__elems_btn">19:00</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="time__btns">
-					<div class="row">
-						<div class="col-md-12">
-							<button  class="time__btns_next">Далее</button>
-							<button  class="time__btns_home">На главную</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+                <div class="">
+                    <p class="popup__text authPopup__text">Введите имя и свой номер телефона</p>
+                        <div class="">
+                            <input type="text" name="phone" class="contacts__form_iunput" placeholder="+7(999)999--99-99" required="">
+                        </div>
+                        <div class="">
+                            <input type="text" name="name" class="contacts__form_iunput" placeholder="Иван Иванович" required="">
+                        </div>
+                        <div class="contacts__form_checkboxBlock fic">
+                            <input type="checkbox" class="contacts__form_checkbox" checked="">
+                            <span class="contacts__form_checkboxBlock__intro">Я согласен(а) с политикой конфиденциальности</span>
+                        </div>
+                </div>
+
+                <div class="time__btns" style="margin: 20px;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="time__btns_next">Далее</button>
+                            <button  class="time__btns_home">На главную</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
 {% endblock %}
 
 {% block scripts %}
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="{% static 'js/main.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

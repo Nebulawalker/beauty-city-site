@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .orm_commands import get_saloons, get_masters, get_services, get_reviews
+from pprint import pprint
 
 
 def index(request):
@@ -37,6 +38,10 @@ def service_finally(request):
     return render(request, 'serviceFinally.html')
 
 def service(request):
+
+    if request.method == 'POST':
+        print(request.POST['date'])
+        pprint(request.POST)
     context = {
         'masters': get_masters(),
         'saloon': get_saloons()[0],
