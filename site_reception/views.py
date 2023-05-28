@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .orm_commands import get_saloons, get_masters, get_services, get_reviews, get_masters_with_counted_reviews, get_timeslots
-from site_reception.models import Order
+from site_reception.models import Order, Saloon, Master, Service
 from django.template.loader import render_to_string
 from datetime import datetime
 
@@ -57,6 +57,16 @@ def handle_schedule(request):
     master_name = request.POST.get('master').strip()
     date = request.POST.get('date')
     date = datetime.strptime(date, '%Y-%m-%d').date()
+    time = request.POST.get('time')
+
+    if service_title and master_name and date and time:
+        Order.objects.create(
+            saloon=Saloon.objects.first(),
+            service=Service.objects.filter(title=service_title),
+            master=Master.objects.filter(name=master_name),
+            appointment_date=date,
+            appointment_time=time,
+        )
 
     orders = Order.objects.all()
     if service_title:

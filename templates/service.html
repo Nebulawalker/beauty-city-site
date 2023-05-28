@@ -296,14 +296,15 @@
 				$(this).parent().parent().find('> button.active').click()
 			}, 200)
 
-			const date = datepicker.selectedDates[0] ? datepicker.selectedDates[0] : datepicker.viewDate
-			const formatDate = `${new Date(date).getFullYear()}-${new Date(date).getMonth() + 1}-${new Date(date).getDate()}`
 
 			const data = document.querySelectorAll('.accordion')
 			let [saloon, service, master] = data
 			saloon = saloon.textContent.split('  ')[0]
 			service = service.textContent.split('  ')[0]
 			master = master.textContent.split('  ')[0]
+
+			const date = datepicker.selectedDates[0] ? datepicker.selectedDates[0] : datepicker.viewDate
+			const formatDate = `${new Date(date).getFullYear()}-${new Date(date).getMonth() + 1}-${new Date(date).getDate()}`
 
 			if (saloon.includes('салон')) {
 				saloon = null
@@ -336,6 +337,13 @@
 				success: function (response) {
 					$('.time__elems').html(response)
 
+					var time_block = document.getElementsByClassName("time__elems_btn");
+					for (let j = 0; j < time_block.length; j++) {
+						time_block[j].addEventListener("click", function (e) {
+							e.preventDefault()
+							this.classList.toggle("active");
+						});
+					}
 					// ordered_timeslots1 = response.ordered_timeslots
 					// console.log('answer:', ordered_timeslots)
 
@@ -382,14 +390,14 @@
 				$(this).parent().parent().find('> button.active').click()
 			}, 200)
 
-			const date = datepicker.selectedDates[0] ? datepicker.selectedDates[0] : datepicker.viewDate
-			const formatDate = `${new Date(date).getFullYear()}-${new Date(date).getMonth() + 1}-${new Date(date).getDate()}`
-
 			const data = document.querySelectorAll('.accordion')
 			let [saloon, service, master] = data
 			saloon = saloon.textContent.split('  ')[0]
 			service = service.textContent.split('  ')[0]
 			master = master.textContent.split('  ')[0]
+
+			const date = datepicker.selectedDates[0] ? datepicker.selectedDates[0] : datepicker.viewDate
+			const formatDate = `${new Date(date).getFullYear()}-${new Date(date).getMonth() + 1}-${new Date(date).getDate()}`
 
 			if (saloon.includes('салон')) {
 				saloon = null
@@ -403,7 +411,7 @@
 
 			console.log('Datepicker onclick')
 			console.log('Send data:')
-			console.log(saloon, service, master, formatDate)
+			console.log(saloon, service, master, formatDate, selectedTime)
 
 			$.ajax({
 				type: 'POST',
@@ -422,6 +430,13 @@
 
 				success: function (response) {
 					$('.time__elems').html(response)
+					var time_block = document.getElementsByClassName("time__elems_btn");
+					for (let j = 0; j < time_block.length; j++) {
+						time_block[j].addEventListener("click", function (e) {
+							e.preventDefault()
+							this.classList.toggle("active");
+						});
+					}
 				}
 			})
 		})
@@ -438,16 +453,58 @@
 		})
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// click next button
-		// const testbutton = document.querySelectorAll('.time__elems_btn')
-		// testbutton.forEach(item=>{
-		// 	item.addEventListener('click', ()=>{
-		// 		console.log('test')
-		// 	})
-		// })
 
 
-		$(document).on('click', '.accordion__block', function (e) {
+		$(document).on('click', '.time__btns_next', function (e) {
 
+			const data = document.querySelectorAll('.accordion')
+			let [saloon, service, master] = data
+			saloon = saloon.textContent.split('  ')[0]
+			service = service.textContent.split('  ')[0]
+			master = master.textContent.split('  ')[0]
+
+			const date = datepicker.selectedDates[0] ? datepicker.selectedDates[0] : datepicker.viewDate
+			const formatDate = `${new Date(date).getFullYear()}-${new Date(date).getMonth() + 1}-${new Date(date).getDate()}`
+
+			console.log('test')
+			const selectedTime = document.querySelectorAll('.time__elems_btn')
+			let time
+			selectedTime.forEach(item=>{
+				if (item.classList.contains('active')){
+					time = item.innerHTML
+				}
+			})
+
+			if (saloon.includes('салон')) {
+				saloon = null
+			}
+			if (service.includes('услугу')) {
+				service = null
+			}
+			if (master.includes('мастера')) {
+				master = null
+			}
+
+			console.log('Datepicker onclick')
+			console.log('Send data:')
+			console.log(saloon, service, master, formatDate, time)
+
+			$.ajax({
+				type: 'POST',
+				url: 'handle_schedule',
+				data: {
+					'saloon': saloon,
+					'service': service,
+					'master': master,
+					'date': formatDate,
+					'time': time,
+					'csrfmiddlewaretoken': '{{ csrf_token }}'
+				},
+				dataType: 'json',
+				error: function (rs, e) {
+					console.log(rs.responseText)
+				}
+			})
 		})
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
