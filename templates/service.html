@@ -90,7 +90,29 @@
 							<div id="datepickerHere"></div>
 						</div>
 
-						{% include 'timeslots.html' %}
+						{#% include 'timeslots.html' %#}
+
+						<div class="col-md-8">
+							<!-- <div class="time__items">
+								<div class="time__elems_intro">Утро</div>
+								<div class="time__elems_elem fic">
+									<button data-time="10:00" class="time__elems_btn">10:00</button>
+									<button data-time="10:30" class="time__elems_btn">10:30</button>
+								</div>
+							</div> -->
+							<div class="time__elems">
+								{% for daytime, times in time_slots.items %}
+								<div class="time__elems_intro">{{ daytime }}</div>
+								<div class="time__elems_elem fic">
+									{% for time in times %}
+
+										<button data-time="10:00" class="time__elems_btn">{{ time }}</button>
+
+									{% endfor %}
+								</div>
+								{% endfor %}
+							</div>
+						</div>
 
 					</div>
 				</div>
@@ -240,7 +262,7 @@
 				$('#mobMenu').hide()
 			})
 
-			new AirDatepicker('#datepickerHere')
+			const datepicker = new AirDatepicker('#datepickerHere')
 
 			var acc = document.getElementsByClassName("accordion");
 			var i;
@@ -257,19 +279,18 @@
 				});
 			}
 
-			// console.log(thisService[0])
 
 
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			$(document).on('click', '.accordion__block', function (e) {
-				// $(document).on('click', '#saloon', function(e) {
+			// function scheduleHandler (){}
 
 				let thisName, thisAddress;
 
 				thisName = $(this).find('> .accordion__block_intro').text()
 				thisAddress = $(this).find('> .accordion__block_address').text()
-
-
 				thisSaloon = $(this).find('> .service__form_block service__salons').find('> .accordion__block_address').text()
+
 				// thisService = document.getElementsByClassName('service__form_block service__services')[0].children[0].textContent.split(' ')[0]
 				// const data = document.querySelectorAll('.accordion')
 				// let [saloon, service, master] = data
@@ -277,11 +298,13 @@
 				// var srvc = document.getElementsByClassName("service__form_block service__services")
 				// $( ".service__form_block service__services" ).find('accordion__block_address').text()
 
-
 				$(this).parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' + thisAddress)
 				setTimeout(() => {
 					$(this).parent().parent().find('> button.active').click()
 				}, 200)
+
+				const date = datepicker.selectedDates[0]? datepicker.selectedDates[0] : datepicker.viewDate
+				const formatDate = `${new Date(date).getFullYear()}-${new Date(date).getMonth()+1}-${new Date(date).getDate()}`
 
 				const data = document.querySelectorAll('.accordion')
 				let [saloon, service, master] = data
@@ -299,10 +322,9 @@
 					master = null
 				}
 
-				console.log(data)
-				console.log(saloon)
-				console.log(service)
-				console.log(master)
+				console.log('Form onclick')
+				console.log('Send data:')
+				console.log(saloon, service, master, formatDate)
 
 				$.ajax({
 					type: 'POST',
@@ -311,18 +333,36 @@
 						'saloon': saloon,
 						'service': service,
 						'master': master,
+						'date': formatDate,
 						'csrfmiddlewaretoken': '{{ csrf_token }}'
 					},
 					dataType: 'json',
 					error: function (rs, e) {
 						console.log(rs.responseText)
-					}
-				})
-			})
+					},
+					success: function (response) {
+						ordered_timeslots = response.ordered_timeslots
+						console.log(ordered_timeslots)
+
+						$('.time__elems').html(`
+											{% for daytime, times in time_slots.items %}
+												<div class="time__elems_intro">{{ daytime }}</div>
+												<div class="time__elems_elem fic">
+												{% for time in times %}
+													{% if time not in ordered_timeslots %}
+														<button data-time="10:00" class="time__elems_btn">{{ time }}</button>
+													{% endif %}
+												{% endfor %}
+												</div>
+											{% endfor %}
+											`)
+										}
+									})
+								})
 
 
-			$('.accordion__block_item').click(function (e) {
-				let thisName, thisAddress;
+								$('.accordion__block_item').click(function (e) {
+									let thisName, thisAddress;
 				thisName = $(this).find('> .accordion__block_item_intro').text()
 				thisAddress = $(this).find('> .accordion__block_item_address').text()
 				$(this).parent().parent().parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' + thisAddress)
@@ -331,9 +371,94 @@
 				}, 200)
 			})
 
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			$(document).on('click', '.air-datepicker-cell', function (e) {
+			// function scheduleHandler (){}
+
+				let thisName, thisAddress;
+
+				thisName = $(this).find('> .accordion__block_intro').text()
+				thisAddress = $(this).find('> .accordion__block_address').text()
+				thisSaloon = $(this).find('> .service__form_block service__salons').find('> .accordion__block_address').text()
+
+				$(this).parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' + thisAddress)
+				setTimeout(() => {
+					$(this).parent().parent().find('> button.active').click()
+				}, 200)
+
+				const date = datepicker.selectedDates[0]? datepicker.selectedDates[0] : datepicker.viewDate
+				const formatDate = `${new Date(date).getFullYear()}-${new Date(date).getMonth()+1}-${new Date(date).getDate()}`
+
+				const data = document.querySelectorAll('.accordion')
+				let [saloon, service, master] = data
+				saloon = saloon.textContent.split('  ')[0]
+				service = service.textContent.split('  ')[0]
+				master = master.textContent.split('  ')[0]
+
+				if (saloon.includes('салон')) {
+					saloon = null
+				}
+				if (service.includes('услугу')) {
+					service = null
+				}
+				if (master.includes('мастера')) {
+					master = null
+				}
+
+				console.log('Datepicker onclick')
+				console.log('Send data:')
+				console.log(saloon, service, master, formatDate)
+
+				$.ajax({
+					type: 'POST',
+					url: '{% url "service" %}',
+					data: {
+						'saloon': saloon,
+						'service': service,
+						'master': master,
+						'date': formatDate,
+						'csrfmiddlewaretoken': '{{ csrf_token }}'
+					},
+					dataType: 'json',
+					error: function (rs, e) {
+						console.log(rs.responseText)
+					},
+					success: function (response) {
+						ordered_timeslots = response.ordered_timeslots
+						console.log(ordered_timeslots)
+
+						$('.time__elems').html(`
+											{% for daytime, times in time_slots.items %}
+												<div class="time__elems_intro">{{ daytime }}</div>
+												<div class="time__elems_elem fic">
+												{% for time in times %}
+													{% if time not in ordered_timeslots %}
+														<button data-time="10:00" class="time__elems_btn">{{ time }}</button>
+													{% endif %}
+												{% endfor %}
+												</div>
+											{% endfor %}
+											`)
+										}
+									})
+								})
+
+
+								$('.accordion__block_item').click(function (e) {
+									let thisName, thisAddress;
+				thisName = $(this).find('> .accordion__block_item_intro').text()
+				thisAddress = $(this).find('> .accordion__block_item_address').text()
+				$(this).parent().parent().parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' + thisAddress)
+				setTimeout(() => {
+					$(this).parent().parent().parent().parent().find('> button.active').click()
+				}, 200)
+			})
+
+
+
 			$(document).on('click', '.service__masters .accordion__block', function (e) {
 				let clone = $(this).clone()
-				console.log(clone)
+				// console.log(clone)
 				$(this).parent().parent().find('> button.active').html(clone)
 			})
 

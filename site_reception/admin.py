@@ -48,11 +48,11 @@ class SaloonAdmin(admin.ModelAdmin):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = (
-        'created_at',
-        'saloon',
-        'service',
         'client',
         'master',
+        'service',
+        'appointment_time',
+        'created_at',
     )
     raw_id_fields = ('client', )
 

@@ -11,7 +11,9 @@
 		<div class="time__elems_intro">{{ daytime }}</div>
 		<div class="time__elems_elem fic">
 			{% for time in times %}
-			<button data-time="10:00" class="time__elems_btn">{{ time }}</button>
+				{% if time not in ordered_timeslots %}
+					<button data-time="10:00" class="time__elems_btn">{{ time }}</button>
+				{% endif %}
 			{% endfor %}
 		</div>
 		{% endfor %}
