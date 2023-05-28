@@ -3,500 +3,510 @@
 {% load static %}
 
 {% block head %}
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Beauty City</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beauty City</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+	integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+	integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css.map">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css.map"> -->
-	<link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
-	<link rel="stylesheet" href="{% static 'css/air-datepicker.css' %}">
-	<script src="{% static 'js/air-datepicker.js' %}"></script>
-	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/air-datepicker.css' %}">
+<script src="{% static 'js/air-datepicker.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
 {% endblock %}
 
 
 {% block content %}
-	<section id="service">
-		<div class="container">
-			<div class="service">
-				<div class="breadCrumbs">
-					<a href="/" class="breadCrumbs__item">На главную</a>
-				</div>
-				<div class="service__block">
-					<h1 class="service__title">Запись на услугу</h1>
-					<button class="service__btn btn">Запись по телефону</button>
-				</div>
-
-				<!-- <form action="#" class="service__form" method="POST"> -->
-				<form action="#" class="service__form">
-					{#% csrf_token %#}
-					<div class="service__form_block service__salons">
-
-						<button class="accordion">(Выберите салон)</button>
-
-						<div class="panel">
-							{% for saloon in saloons %}
-							<div class="accordion__block fic">
-								<!-- <button id="saloon" class="accordion__block_intro" name="saloon_title" value="{{ saloon.title }}"> -->
-									<!-- {{ saloon.title }} -->
-								<!-- </button> -->
-								<div class="accordion__block_intro">{{ saloon.title }}</div>
-								<div class="accordion__block_address">{{ saloon.address }}</div>
-							</div>
-							{% endfor %}
-						</div>
-					</div>
-
-					<div class="service__form_block service__services">
-						<button class="accordion">(Выберите услугу)</button>
-						<div class="panel">
-							{% for service in services %}
-								<div class="accordion__block fic">
-									<div class="accordion__block_intro">{{ service.title }}</div>
-									<div class="accordion__block_address">{{ service.price }}</div>
-								</div>
-							{% endfor %}
-						</div>
-					</div>
-
-					<div class="service__form_block service__masters">
-						<button class="accordion">(Выберите мастера)</button>
-						<div class="panel">
-							{% for master in masters %}
-								<div class="accordion__block fic">
-									<img src="{{ master.photo.url }}" alt="avatar" class="accordion__block_img">
-									<div class="accordion__block_intro">{{ master.name }}</div>
-								</div>
-							{% endfor %}
-						</div>
-					</div>
-
-				</form>
+<section id="service">
+	<div class="container">
+		<div class="service">
+			<div class="breadCrumbs">
+				<a href="/" class="breadCrumbs__item">На главную</a>
 			</div>
-		</div>
-	</section>
-	<section id="time">
-		<div class="container">
-			<div class="time">
-				<h2 class="time__title">Выберите время</h2>
-				<div class="time__block">
-					<div class="row">
-						<div class="col-md-4">
-							<div id="datepickerHere"></div>
+			<div class="service__block">
+				<h1 class="service__title">Запись на услугу</h1>
+				<button class="service__btn btn">Запись по телефону</button>
+			</div>
+
+			<!-- <form action="#" class="service__form" method="POST"> -->
+			<form action="#" class="service__form">
+				{#% csrf_token %#}
+				<div class="service__form_block service__salons">
+
+					<button class="accordion">(Выберите салон)</button>
+
+					<div class="panel">
+						{% for saloon in saloons %}
+						<div class="accordion__block fic">
+							<!-- <button id="saloon" class="accordion__block_intro" name="saloon_title" value="{{ saloon.title }}"> -->
+							<!-- {{ saloon.title }} -->
+							<!-- </button> -->
+							<div class="accordion__block_intro">{{ saloon.title }}</div>
+							<div class="accordion__block_address">{{ saloon.address }}</div>
 						</div>
+						{% endfor %}
+					</div>
+				</div>
 
-						{#% include 'timeslots.html' %#}
+				<div class="service__form_block service__services">
+					<button class="accordion">(Выберите услугу)</button>
+					<div class="panel">
+						{% for service in services %}
+						<div class="accordion__block fic">
+							<div class="accordion__block_intro">{{ service.title }}</div>
+							<div class="accordion__block_address">{{ service.price }}</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
 
-						<div class="col-md-8">
-							<!-- <div class="time__items">
+				<div class="service__form_block service__masters">
+					<button class="accordion">(Выберите мастера)</button>
+					<div class="panel">
+						{% for master in masters %}
+						<div class="accordion__block fic">
+							<img src="{{ master.photo.url }}" alt="avatar" class="accordion__block_img">
+							<div class="accordion__block_intro">{{ master.name }}</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>
+</section>
+<section id="time">
+	<div class="container">
+		<div class="time">
+			<h2 class="time__title">Выберите время</h2>
+			<div class="time__block">
+				<div class="row">
+					<div class="col-md-4">
+						<div id="datepickerHere"></div>
+					</div>
+
+					{#% include 'timeslots.html' %#}
+
+					<div class="col-md-8">
+						<!-- <div class="time__items">
 								<div class="time__elems_intro">Утро</div>
 								<div class="time__elems_elem fic">
 									<button data-time="10:00" class="time__elems_btn">10:00</button>
 									<button data-time="10:30" class="time__elems_btn">10:30</button>
 								</div>
 							</div> -->
-							<div class="time__elems">
-								{% for daytime, times in time_slots.items %}
-								<div class="time__elems_intro">{{ daytime }}</div>
-								<div class="time__elems_elem fic">
-									{% for time in times %}
-
-										<button data-time="10:00" class="time__elems_btn">{{ time }}</button>
-
-									{% endfor %}
-								</div>
+						<div class="time__elems">
+							{% for daytime, times in time_slots.items %}
+							<div class="time__elems_intro">{{ daytime }}</div>
+							<div class="time__elems_elem fic">
+								{% for time in times %}
+								<button data-time="default html" class="time__elems_btn">{{ time }}</button>
 								{% endfor %}
 							</div>
+							{% endfor %}
 						</div>
-
 					</div>
-				</div>
-				<div class="time__btns">
-					<div class="row">
-						<div class="col-md-12">
-							<a href="#">
-								<button class="time__btns_next">Далее</button>
-							</a>
-							<a href="/">
-								<button class="time__btns_home">На главную</button>
-							</a>
 
-						</div>
+				</div>
+			</div>
+			<div class="time__btns">
+				<div class="row">
+					<div class="col-md-12">
+						<a href="/">
+							<button class="time__btns_home">На главную</button>
+						</a>
+						<a href="{% url 'service_finally' %}">
+							<button class="time__btns_next">Далее</button>
+						</a>
+
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
+</section>
 {% endblock %}
 
 {% block scripts %}
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<!-- <script src="{% static 'js/main.js' %}"></script> -->
-	<script type="text/javascript">
-		$(document).ready(function () {
-			$('.salonsSlider').slick({
-				arrows: true,
-				slidesToShow: 4,
-				infinite: true,
-				prevArrow: $('.salons .leftArrow'),
-				nextArrow: $('.salons .rightArrow'),
-				responsive: [
-					{
-						breakpoint: 991,
-						settings: {
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+	integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+	integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- <script src="{% static 'js/main.js' %}"></script> -->
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('.salonsSlider').slick({
+			arrows: true,
+			slidesToShow: 4,
+			infinite: true,
+			prevArrow: $('.salons .leftArrow'),
+			nextArrow: $('.salons .rightArrow'),
+			responsive: [
+				{
+					breakpoint: 991,
+					settings: {
 
-							centerMode: true,
-							//centerPadding: '60px',
-							slidesToShow: 2
-						}
-					},
-					{
-						breakpoint: 575,
-						settings: {
-							slidesToShow: 1
-						}
+						centerMode: true,
+						//centerPadding: '60px',
+						slidesToShow: 2
 					}
-				]
-			});
-			$('.servicesSlider').slick({
-				arrows: true,
-				slidesToShow: 4,
-				prevArrow: $('.services .leftArrow'),
-				nextArrow: $('.services .rightArrow'),
-				responsive: [
-					{
-						breakpoint: 1199,
-						settings: {
-
-
-							slidesToShow: 3
-						}
-					},
-					{
-						breakpoint: 991,
-						settings: {
-
-							centerMode: true,
-							//centerPadding: '60px',
-							slidesToShow: 2
-						}
-					},
-					{
-						breakpoint: 575,
-						settings: {
-							slidesToShow: 1
-						}
+				},
+				{
+					breakpoint: 575,
+					settings: {
+						slidesToShow: 1
 					}
-				]
-			});
-
-			$('.mastersSlider').slick({
-				arrows: true,
-				slidesToShow: 4,
-				prevArrow: $('.masters .leftArrow'),
-				nextArrow: $('.masters .rightArrow'),
-				responsive: [
-					{
-						breakpoint: 1199,
-						settings: {
-
-
-							slidesToShow: 3
-						}
-					},
-					{
-						breakpoint: 991,
-						settings: {
+				}
+			]
+		});
+		$('.servicesSlider').slick({
+			arrows: true,
+			slidesToShow: 4,
+			prevArrow: $('.services .leftArrow'),
+			nextArrow: $('.services .rightArrow'),
+			responsive: [
+				{
+					breakpoint: 1199,
+					settings: {
 
 
-							slidesToShow: 2
-						}
-					},
-					{
-						breakpoint: 575,
-						settings: {
-							slidesToShow: 1
-						}
+						slidesToShow: 3
 					}
-				]
-			});
+				},
+				{
+					breakpoint: 991,
+					settings: {
 
-			$('.reviewsSlider').slick({
-				arrows: true,
-				slidesToShow: 4,
-				prevArrow: $('.reviews .leftArrow'),
-				nextArrow: $('.reviews .rightArrow'),
-				responsive: [
-					{
-						breakpoint: 1199,
-						settings: {
-							slidesToShow: 3
-						}
-					},
-					{
-						breakpoint: 991,
-						settings: {
-							slidesToShow: 2
-						}
-					},
-					{
-						breakpoint: 575,
-						settings: {
-							slidesToShow: 1
-						}
+						centerMode: true,
+						//centerPadding: '60px',
+						slidesToShow: 2
 					}
-				]
+				},
+				{
+					breakpoint: 575,
+					settings: {
+						slidesToShow: 1
+					}
+				}
+			]
+		});
+
+		$('.mastersSlider').slick({
+			arrows: true,
+			slidesToShow: 4,
+			prevArrow: $('.masters .leftArrow'),
+			nextArrow: $('.masters .rightArrow'),
+			responsive: [
+				{
+					breakpoint: 1199,
+					settings: {
+
+
+						slidesToShow: 3
+					}
+				},
+				{
+					breakpoint: 991,
+					settings: {
+
+
+						slidesToShow: 2
+					}
+				},
+				{
+					breakpoint: 575,
+					settings: {
+						slidesToShow: 1
+					}
+				}
+			]
+		});
+
+		$('.reviewsSlider').slick({
+			arrows: true,
+			slidesToShow: 4,
+			prevArrow: $('.reviews .leftArrow'),
+			nextArrow: $('.reviews .rightArrow'),
+			responsive: [
+				{
+					breakpoint: 1199,
+					settings: {
+						slidesToShow: 3
+					}
+				},
+				{
+					breakpoint: 991,
+					settings: {
+						slidesToShow: 2
+					}
+				},
+				{
+					breakpoint: 575,
+					settings: {
+						slidesToShow: 1
+					}
+				}
+			]
+		});
+
+		// menu
+		$('.header__mobMenu').click(function () {
+			$('#mobMenu').show()
+		})
+		$('.mobMenuClose').click(function () {
+			$('#mobMenu').hide()
+		})
+
+		const datepicker = new AirDatepicker('#datepickerHere')
+
+		var acc = document.getElementsByClassName("accordion");
+		var i;
+
+		for (i = 0; i < acc.length; i++) {
+			acc[i].addEventListener("click", function (e) {
+				e.preventDefault()
+				this.classList.toggle("active");
+				var panel = $(this).next()
+				panel.hasClass('active') ?
+					panel.removeClass('active')
+					:
+					panel.addClass('active')
 			});
+		}
 
-			// menu
-			$('.header__mobMenu').click(function () {
-				$('#mobMenu').show()
-			})
-			$('.mobMenuClose').click(function () {
-				$('#mobMenu').hide()
-			})
 
-			const datepicker = new AirDatepicker('#datepickerHere')
 
-			var acc = document.getElementsByClassName("accordion");
-			var i;
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		$(document).on('click', '.accordion__block', function (e) {
 
-			for (i = 0; i < acc.length; i++) {
-				acc[i].addEventListener("click", function (e) {
-					e.preventDefault()
-					this.classList.toggle("active");
-					var panel = $(this).next()
-					panel.hasClass('active') ?
-						panel.removeClass('active')
-						:
-						panel.addClass('active')
-				});
+			let thisName, thisAddress;
+
+			thisName = $(this).find('> .accordion__block_intro').text()
+			thisAddress = $(this).find('> .accordion__block_address').text()
+			thisSaloon = $(this).find('> .service__form_block service__salons').find('> .accordion__block_address').text()
+
+			$(this).parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' + thisAddress)
+			setTimeout(() => {
+				$(this).parent().parent().find('> button.active').click()
+			}, 200)
+
+			const date = datepicker.selectedDates[0]? datepicker.selectedDates[0] : datepicker.viewDate
+			const formatDate = `${new Date(date).getFullYear()}-${new Date(date).getMonth()+1}-${new Date(date).getDate()}`
+
+			const data = document.querySelectorAll('.accordion')
+			let [saloon, service, master] = data
+			saloon = saloon.textContent.split('  ')[0]
+			service = service.textContent.split('  ')[0]
+			master = master.textContent.split('  ')[0]
+
+			if (saloon.includes('салон')) {
+				saloon = null
+			}
+			if (service.includes('услугу')) {
+				service = null
+			}
+			if (master.includes('мастера')) {
+				master = null
 			}
 
+			console.log('Form onclick')
+			console.log('Send data:')
+			console.log(saloon, service, master, formatDate)
+
+			$.ajax({
+				type: 'POST',
+				url: 'handle_schedule',
+				data: {
+					'saloon': saloon,
+					'service': service,
+					'master': master,
+					'date': formatDate,
+					'csrfmiddlewaretoken': '{{ csrf_token }}'
+				},
+				dataType: 'json',
+				error: function (rs, e) {
+					console.log(rs.responseText)
+				},
+				success: function (response) {
+					ordered_timeslots = response.ordered_timeslots
+					console.log('answer:', ordered_timeslots)
+
+					$('.time__elems').html(`
+										{% for daytime, times in time_slots.items %}
+											<div class="time__elems_intro">{{ daytime }}</div>
+											<div> OOOOooooOOO </div>
+											<div class="time__elems_elem fic">
+											{% for time in times %}
+												{% if time not in ordered_timeslots %}
+													<button data-time="10:00" class="time__elems_btn">{{ time }}</button>
+												{% else %}
+													<button data-time="{{ time }}" class="time__elems_btn">**IN**</button>
+												{% endif %}
+											{% endfor %}
+											</div>
+										{% endfor %}
+										`)
+									}
+								})
+							})
 
 
-			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			$(document).on('click', '.accordion__block', function (e) {
-			// function scheduleHandler (){}
+							$('.accordion__block_item').click(function (e) {
+								let thisName, thisAddress;
+			thisName = $(this).find('> .accordion__block_item_intro').text()
+			thisAddress = $(this).find('> .accordion__block_item_address').text()
+			$(this).parent().parent().parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' + thisAddress)
+			setTimeout(() => {
+				$(this).parent().parent().parent().parent().find('> button.active').click()
+			}, 200)
+		})
 
-				let thisName, thisAddress;
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		$(document).on('click', '.air-datepicker-cell', function (e) {
 
-				thisName = $(this).find('> .accordion__block_intro').text()
-				thisAddress = $(this).find('> .accordion__block_address').text()
-				thisSaloon = $(this).find('> .service__form_block service__salons').find('> .accordion__block_address').text()
+			let thisName, thisAddress;
 
-				// thisService = document.getElementsByClassName('service__form_block service__services')[0].children[0].textContent.split(' ')[0]
-				// const data = document.querySelectorAll('.accordion')
-				// let [saloon, service, master] = data
-				// console.log(data)
-				// var srvc = document.getElementsByClassName("service__form_block service__services")
-				// $( ".service__form_block service__services" ).find('accordion__block_address').text()
+			thisName = $(this).find('> .accordion__block_intro').text()
+			thisAddress = $(this).find('> .accordion__block_address').text()
+			thisSaloon = $(this).find('> .service__form_block service__salons').find('> .accordion__block_address').text()
 
-				$(this).parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' + thisAddress)
-				setTimeout(() => {
-					$(this).parent().parent().find('> button.active').click()
-				}, 200)
+			$(this).parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' + thisAddress)
+			setTimeout(() => {
+				$(this).parent().parent().find('> button.active').click()
+			}, 200)
 
-				const date = datepicker.selectedDates[0]? datepicker.selectedDates[0] : datepicker.viewDate
-				const formatDate = `${new Date(date).getFullYear()}-${new Date(date).getMonth()+1}-${new Date(date).getDate()}`
+			const date = datepicker.selectedDates[0] ? datepicker.selectedDates[0] : datepicker.viewDate
+			const formatDate = `${new Date(date).getFullYear()}-${new Date(date).getMonth() + 1}-${new Date(date).getDate()}`
 
-				const data = document.querySelectorAll('.accordion')
-				let [saloon, service, master] = data
-				saloon = saloon.textContent.split('  ')[0]
-				service = service.textContent.split('  ')[0]
-				master = master.textContent.split('  ')[0]
+			const data = document.querySelectorAll('.accordion')
+			let [saloon, service, master] = data
+			saloon = saloon.textContent.split('  ')[0]
+			service = service.textContent.split('  ')[0]
+			master = master.textContent.split('  ')[0]
 
-				if (saloon.includes('салон')) {
-					saloon = null
-				}
-				if (service.includes('услугу')) {
-					service = null
-				}
-				if (master.includes('мастера')) {
-					master = null
-				}
+			if (saloon.includes('салон')) {
+				saloon = null
+			}
+			if (service.includes('услугу')) {
+				service = null
+			}
+			if (master.includes('мастера')) {
+				master = null
+			}
 
-				console.log('Form onclick')
-				console.log('Send data:')
-				console.log(saloon, service, master, formatDate)
+			console.log('Datepicker onclick')
+			console.log('Send data:')
+			console.log(saloon, service, master, formatDate)
 
-				$.ajax({
-					type: 'POST',
-					url: '{% url "service" %}',
-					data: {
-						'saloon': saloon,
-						'service': service,
-						'master': master,
-						'date': formatDate,
-						'csrfmiddlewaretoken': '{{ csrf_token }}'
-					},
-					dataType: 'json',
-					error: function (rs, e) {
-						console.log(rs.responseText)
-					},
-					success: function (response) {
-						ordered_timeslots = response.ordered_timeslots
-						console.log(ordered_timeslots)
+			$.ajax({
+				type: 'POST',
+				url: 'handle_schedule',
+				data: {
+					'saloon': saloon,
+					'service': service,
+					'master': master,
+					'date': formatDate,
+					'csrfmiddlewaretoken': '{{ csrf_token }}'
+				},
+				dataType: 'json',
+				error: function (rs, e) {
+					console.log(rs.responseText)
+				},
 
-						$('.time__elems').html(`
+				success: function (response) {
+					const ordered_timeslots = response.ordered_timeslots
+					console.log('answer :', ordered_timeslots)
+					const buttons = ordered_timeslots.map(item => {
+						console.log(item)
+						return `<button data-time="{{time}}" class="time__elems_btn">{{time}}</button>`
+					})
+					// console.log(buttons)
+
+					$('.time__elems').html(`
 											{% for daytime, times in time_slots.items %}
 												<div class="time__elems_intro">{{ daytime }}</div>
 												<div class="time__elems_elem fic">
+
 												{% for time in times %}
 													{% if time not in ordered_timeslots %}
-														<button data-time="10:00" class="time__elems_btn">{{ time }}</button>
+														<button data-time="{{ time }}" class="time__elems_btn">{{ time }}</button>
+													{% else %}
+														<button data-time="{{ time }}" class="time__elems_btn">**IN**</button>
 													{% endif %}
 												{% endfor %}
 												</div>
 											{% endfor %}
 											`)
-										}
-									})
-								})
-
-
-								$('.accordion__block_item').click(function (e) {
-									let thisName, thisAddress;
-				thisName = $(this).find('> .accordion__block_item_intro').text()
-				thisAddress = $(this).find('> .accordion__block_item_address').text()
-				$(this).parent().parent().parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' + thisAddress)
-				setTimeout(() => {
-					$(this).parent().parent().parent().parent().find('> button.active').click()
-				}, 200)
-			})
-
-			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			$(document).on('click', '.air-datepicker-cell', function (e) {
-			// function scheduleHandler (){}
-
-				let thisName, thisAddress;
-
-				thisName = $(this).find('> .accordion__block_intro').text()
-				thisAddress = $(this).find('> .accordion__block_address').text()
-				thisSaloon = $(this).find('> .service__form_block service__salons').find('> .accordion__block_address').text()
-
-				$(this).parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' + thisAddress)
-				setTimeout(() => {
-					$(this).parent().parent().find('> button.active').click()
-				}, 200)
-
-				const date = datepicker.selectedDates[0]? datepicker.selectedDates[0] : datepicker.viewDate
-				const formatDate = `${new Date(date).getFullYear()}-${new Date(date).getMonth()+1}-${new Date(date).getDate()}`
-
-				const data = document.querySelectorAll('.accordion')
-				let [saloon, service, master] = data
-				saloon = saloon.textContent.split('  ')[0]
-				service = service.textContent.split('  ')[0]
-				master = master.textContent.split('  ')[0]
-
-				if (saloon.includes('салон')) {
-					saloon = null
-				}
-				if (service.includes('услугу')) {
-					service = null
-				}
-				if (master.includes('мастера')) {
-					master = null
-				}
-
-				console.log('Datepicker onclick')
-				console.log('Send data:')
-				console.log(saloon, service, master, formatDate)
-
-				$.ajax({
-					type: 'POST',
-					url: '{% url "service" %}',
-					data: {
-						'saloon': saloon,
-						'service': service,
-						'master': master,
-						'date': formatDate,
-						'csrfmiddlewaretoken': '{{ csrf_token }}'
-					},
-					dataType: 'json',
-					error: function (rs, e) {
-						console.log(rs.responseText)
-					},
-					success: function (response) {
-						ordered_timeslots = response.ordered_timeslots
-						console.log(ordered_timeslots)
-
-						$('.time__elems').html(`
-											{% for daytime, times in time_slots.items %}
-												<div class="time__elems_intro">{{ daytime }}</div>
-												<div class="time__elems_elem fic">
-												{% for time in times %}
-													{% if time not in ordered_timeslots %}
-														<button data-time="10:00" class="time__elems_btn">{{ time }}</button>
-													{% endif %}
-												{% endfor %}
-												</div>
-											{% endfor %}
-											`)
-										}
-									})
-								})
-
-
-								$('.accordion__block_item').click(function (e) {
-									let thisName, thisAddress;
-				thisName = $(this).find('> .accordion__block_item_intro').text()
-				thisAddress = $(this).find('> .accordion__block_item_address').text()
-				$(this).parent().parent().parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' + thisAddress)
-				setTimeout(() => {
-					$(this).parent().parent().parent().parent().find('> button.active').click()
-				}, 200)
-			})
-
-
-
-			$(document).on('click', '.service__masters .accordion__block', function (e) {
-				let clone = $(this).clone()
-				// console.log(clone)
-				$(this).parent().parent().find('> button.active').html(clone)
-			})
-
-			$('.header__block_auth').click(function (e) {
-				e.preventDefault()
-				$('#authModal').arcticmodal();
-
-			})
-
-			$('.rewiewPopupOpen').click(function (e) {
-				e.preventDefault()
-				$('#reviewModal').arcticmodal();
-			})
-			$('.payPopupOpen').click(function (e) {
-				e.preventDefault()
-				$('#paymentModal').arcticmodal();
-			})
-			$('.tipsPopupOpen').click(function (e) {
-				e.preventDefault()
-				$('#tipsModal').arcticmodal();
-			})
-
-			$('.authPopup__form').submit(function () {
-				$('#confirmModal').arcticmodal();
-				return false
-			})
-
-			$('.time__items .time__elems_elem .time__elems_btn').click(function (e) {
-				e.preventDefault()
-				$('.time__elems_btn').removeClass('active')
-				$(this).addClass('active')
-			})
-
-			$(document).on('click', '.servicePage', function () {
-				if ($('.time__items .time__elems_elem .time__elems_btn').hasClass('active') && $('.service__form_block > button').hasClass('selected')) {
-					$('.time__btns_next').addClass('active')
+					// $('.time__elems').html(buttons)
 				}
 			})
 		})
-	</script>
+
+
+		$('.accordion__block_item').click(function (e) {
+			let thisName, thisAddress;
+			thisName = $(this).find('> .accordion__block_item_intro').text()
+			thisAddress = $(this).find('> .accordion__block_item_address').text()
+			$(this).parent().parent().parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' + thisAddress)
+			setTimeout(() => {
+				$(this).parent().parent().parent().parent().find('> button.active').click()
+			}, 200)
+		})
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+		$(document).on('click', '.service__masters .accordion__block', function (e) {
+			let clone = $(this).clone()
+			// console.log(clone)
+			$(this).parent().parent().find('> button.active').html(clone)
+		})
+
+		$('.header__block_auth').click(function (e) {
+			e.preventDefault()
+			$('#authModal').arcticmodal();
+
+		})
+
+		$('.rewiewPopupOpen').click(function (e) {
+			e.preventDefault()
+			$('#reviewModal').arcticmodal();
+		})
+		$('.payPopupOpen').click(function (e) {
+			e.preventDefault()
+			$('#paymentModal').arcticmodal();
+		})
+		$('.tipsPopupOpen').click(function (e) {
+			e.preventDefault()
+			$('#tipsModal').arcticmodal();
+		})
+
+		$('.authPopup__form').submit(function () {
+			$('#confirmModal').arcticmodal();
+			return false
+		})
+
+		$('.time__items .time__elems_elem .time__elems_btn').click(function (e) {
+			e.preventDefault()
+			$('.time__elems_btn').removeClass('active')
+			$(this).addClass('active')
+		})
+
+		$(document).on('click', '.servicePage', function () {
+			if ($('.time__items .time__elems_elem .time__elems_btn').hasClass('active') && $('.service__form_block > button').hasClass('selected')) {
+				$('.time__btns_next').addClass('active')
+			}
+		})
+	})
+</script>
 {% endblock %}

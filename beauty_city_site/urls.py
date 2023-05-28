@@ -25,6 +25,7 @@ from django.conf import settings
 urlpatterns = [
     path('', views.index, name='Главная'),
     path('service.html', views.service, name='service'),
+    path('handle_schedule', views.handle_schedule, name='handle_schedule'),
     path('serviceFinally.html', views.service_finally, name='service_finally'),
     path('admin/', admin.site.urls),
     path('__debug__/', include('debug_toolbar.urls')),

@@ -41,43 +41,43 @@ def service_finally(request):
 
 
 def service(request):
-    if request.method == 'POST':
-        service_title = request.POST.get('service')
-        master_name = request.POST.get('master')
-        date = request.POST.get('date')
-        # print(datetime.strptime(date, '%m/%d/%y'))
+    # service_title = request.POST.get('service')
+    # master_name = request.POST.get('master')
 
-        orders = Order.objects.all()
-        if service_title:
-            orders = orders.filter(service__title=service_title)
-        if master_name:
-            orders = orders.filter(master__name=master_name)
+    # orders = Order.objects.all()
+    # if service_title:
+    #     orders = orders.filter(service__title=service_title)
+    # if master_name:
+    #     orders = orders.filter(master__name=master_name)
 
-        ordered_timeslots = []
-        for order in orders:
+    # ordered_timeslots = []
+    # for order in orders:
+    #     ordered_timeslots.append(order.appointment_time)
+
+    context = {
+        'saloons': get_saloons(),
+        'services': get_services(),
+        'masters': get_masters(),
+        'time_slots': get_timeslots(),
+        # 'ordered_timeslots': ordered_timeslots,
+    }
+    return render(request, 'service.html', context)
+
+
+def handle_schedule(request):
+    service_title = request.POST.get('service')
+    master_name = request.POST.get('master')
+    date = request.POST.get('date')
+    date = datetime.strptime(date, '%Y-%m-%d').date()
+
+    orders = Order.objects.all()
+    if service_title:
+        orders = orders.filter(service__title=service_title)
+    if master_name:
+        orders = orders.filter(master__name=master_name)
+
+    ordered_timeslots = []
+    for order in orders:
+        if order.appointment_date == date:
             ordered_timeslots.append(order.appointment_time)
-
-        return JsonResponse({'ordered_timeslots': ordered_timeslots}, safe=False)
-
-    else:
-        service_title = request.POST.get('service')
-        master_name = request.POST.get('master')
-
-        orders = Order.objects.all()
-        if service_title:
-            orders = orders.filter(service__title=service_title)
-        if master_name:
-            orders = orders.filter(master__name=master_name)
-
-        ordered_timeslots = []
-        for order in orders:
-            ordered_timeslots.append(order.appointment_time)
-
-        context = {
-            'saloons': get_saloons(),
-            'services': get_services(),
-            'masters': get_masters(),
-            'time_slots': get_timeslots(),
-            'ordered_timeslots': ordered_timeslots,
-        }
-        return render(request, 'service.html', context)
+    return JsonResponse({'ordered_timeslots': ordered_timeslots}, safe=False)
