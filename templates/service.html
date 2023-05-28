@@ -94,25 +94,9 @@
 						<div id="datepickerHere"></div>
 					</div>
 
-					{#% include 'timeslots.html' %#}
-
 					<div class="col-md-8">
-						<!-- <div class="time__items">
-								<div class="time__elems_intro">Утро</div>
-								<div class="time__elems_elem fic">
-									<button data-time="10:00" class="time__elems_btn">10:00</button>
-									<button data-time="10:30" class="time__elems_btn">10:30</button>
-								</div>
-							</div> -->
 						<div class="time__elems">
-							{% for daytime, times in time_slots.items %}
-							<div class="time__elems_intro">{{ daytime }}</div>
-							<div class="time__elems_elem fic">
-								{% for time in times %}
-								<button data-time="default html" class="time__elems_btn">{{ time }}</button>
-								{% endfor %}
-							</div>
-							{% endfor %}
+							{% include 'timeslots.html' %}
 						</div>
 					</div>
 
@@ -301,8 +285,8 @@
 				$(this).parent().parent().find('> button.active').click()
 			}, 200)
 
-			const date = datepicker.selectedDates[0]? datepicker.selectedDates[0] : datepicker.viewDate
-			const formatDate = `${new Date(date).getFullYear()}-${new Date(date).getMonth()+1}-${new Date(date).getDate()}`
+			const date = datepicker.selectedDates[0] ? datepicker.selectedDates[0] : datepicker.viewDate
+			const formatDate = `${new Date(date).getFullYear()}-${new Date(date).getMonth() + 1}-${new Date(date).getDate()}`
 
 			const data = document.querySelectorAll('.accordion')
 			let [saloon, service, master] = data
@@ -339,31 +323,30 @@
 					console.log(rs.responseText)
 				},
 				success: function (response) {
-					ordered_timeslots = response.ordered_timeslots
-					console.log('answer:', ordered_timeslots)
+					// ordered_timeslots1 = response.ordered_timeslots
+					// console.log('answer:', ordered_timeslots)
 
-					$('.time__elems').html(`
-										{% for daytime, times in time_slots.items %}
-											<div class="time__elems_intro">{{ daytime }}</div>
-											<div> OOOOooooOOO </div>
-											<div class="time__elems_elem fic">
-											{% for time in times %}
-												{% if time not in ordered_timeslots %}
-													<button data-time="10:00" class="time__elems_btn">{{ time }}</button>
-												{% else %}
-													<button data-time="{{ time }}" class="time__elems_btn">**IN**</button>
-												{% endif %}
-											{% endfor %}
-											</div>
-										{% endfor %}
-										`)
-									}
-								})
-							})
+					// $('.time__elems').html(`
+					// 					{% for daytime, times in time_slots.items %}
+					// 						<div class="time__elems_intro">{{ daytime }}</div>
+					// 						<div class="time__elems_elem fic">
+					// 						{% for time in times %}
+					// 							{% if time not in ordered_timeslots1 %}
+					// 								<button data-time="10:00" class="time__elems_btn">{{ time }}</button>
+					// 							{% else %}
+					// 								<button data-time="{{ time }}" class="time__elems_btn">**IN**</button>
+					// 							{% endif %}
+					// 						{% endfor %}
+					// 						</div>
+					// 					{% endfor %}
+					// 					`)
+					$('.time__elems').html(response)
+				}
+			})
+		})
 
-
-							$('.accordion__block_item').click(function (e) {
-								let thisName, thisAddress;
+		$('.accordion__block_item').click(function (e) {
+			let thisName, thisAddress;
 			thisName = $(this).find('> .accordion__block_item_intro').text()
 			thisAddress = $(this).find('> .accordion__block_item_address').text()
 			$(this).parent().parent().parent().parent().find('> button.active').addClass('selected').text(thisName + '  ' + thisAddress)
@@ -427,28 +410,30 @@
 				success: function (response) {
 					const ordered_timeslots = response.ordered_timeslots
 					console.log('answer :', ordered_timeslots)
-					const buttons = ordered_timeslots.map(item => {
-						console.log(item)
-						return `<button data-time="{{time}}" class="time__elems_btn">{{time}}</button>`
-					})
+					console.log(response)
+					// const buttons = ordered_timeslots.map(item => {
+					// 	console.log(item)
+					// 	return `<button data-time="{{time}}" class="time__elems_btn">{{time}}</button>`
+					// })
 					// console.log(buttons)
 
-					$('.time__elems').html(`
-											{% for daytime, times in time_slots.items %}
-												<div class="time__elems_intro">{{ daytime }}</div>
-												<div class="time__elems_elem fic">
+					// $('.time__elems').html(`
+					// 						{% for daytime, times in time_slots.items %}
+					// 							<div class="time__elems_intro">{{ daytime }}</div>
+					// 							<div class="time__elems_elem fic">
 
-												{% for time in times %}
-													{% if time not in ordered_timeslots %}
-														<button data-time="{{ time }}" class="time__elems_btn">{{ time }}</button>
-													{% else %}
-														<button data-time="{{ time }}" class="time__elems_btn">**IN**</button>
-													{% endif %}
-												{% endfor %}
-												</div>
-											{% endfor %}
-											`)
+					// 							{% for time in times %}
+					// 								{% if time not in ordered_timeslots %}
+					// 									<button data-time="{{ time }}" class="time__elems_btn">{{ time }}</button>
+					// 								{% else %}
+					// 									<button data-time="{{ time }}" class="time__elems_btn">**IN**</button>
+					// 								{% endif %}
+					// 							{% endfor %}
+					// 							</div>
+					// 						{% endfor %}
+					// 						`)
 					// $('.time__elems').html(buttons)
+					$('.time__elems').html(response)
 				}
 			})
 		})
