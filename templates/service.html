@@ -252,7 +252,9 @@
 			$('#mobMenu').hide()
 		})
 
-		const datepicker = new AirDatepicker('#datepickerHere')
+		const datepicker = new AirDatepicker('#datepickerHere',  {
+            minDate: new Date()
+        })
 
 		var acc = document.getElementsByClassName("accordion");
 		var i;
@@ -269,9 +271,18 @@
 			});
 		}
 
+		var time_block = document.getElementsByClassName("time__elems_btn");
+
+		for (let j = 0; j < time_block.length; j++) {
+			time_block[j].addEventListener("click", function (e) {
+				e.preventDefault()
+				this.classList.toggle("active");
+			});
+		}
 
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// click on saloon/service/master
 		$(document).on('click', '.accordion__block', function (e) {
 
 			let thisName, thisAddress;
@@ -323,6 +334,8 @@
 					console.log(rs.responseText)
 				},
 				success: function (response) {
+					$('.time__elems').html(response)
+
 					// ordered_timeslots1 = response.ordered_timeslots
 					// console.log('answer:', ordered_timeslots)
 
@@ -340,7 +353,6 @@
 					// 						</div>
 					// 					{% endfor %}
 					// 					`)
-					$('.time__elems').html(response)
 				}
 			})
 		})
@@ -356,6 +368,7 @@
 		})
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// click on calendar
 		$(document).on('click', '.air-datepicker-cell', function (e) {
 
 			let thisName, thisAddress;
@@ -408,31 +421,6 @@
 				},
 
 				success: function (response) {
-					const ordered_timeslots = response.ordered_timeslots
-					console.log('answer :', ordered_timeslots)
-					console.log(response)
-					// const buttons = ordered_timeslots.map(item => {
-					// 	console.log(item)
-					// 	return `<button data-time="{{time}}" class="time__elems_btn">{{time}}</button>`
-					// })
-					// console.log(buttons)
-
-					// $('.time__elems').html(`
-					// 						{% for daytime, times in time_slots.items %}
-					// 							<div class="time__elems_intro">{{ daytime }}</div>
-					// 							<div class="time__elems_elem fic">
-
-					// 							{% for time in times %}
-					// 								{% if time not in ordered_timeslots %}
-					// 									<button data-time="{{ time }}" class="time__elems_btn">{{ time }}</button>
-					// 								{% else %}
-					// 									<button data-time="{{ time }}" class="time__elems_btn">**IN**</button>
-					// 								{% endif %}
-					// 							{% endfor %}
-					// 							</div>
-					// 						{% endfor %}
-					// 						`)
-					// $('.time__elems').html(buttons)
 					$('.time__elems').html(response)
 				}
 			})
@@ -449,7 +437,20 @@
 			}, 200)
 		})
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// click next button
+		// const testbutton = document.querySelectorAll('.time__elems_btn')
+		// testbutton.forEach(item=>{
+		// 	item.addEventListener('click', ()=>{
+		// 		console.log('test')
+		// 	})
+		// })
 
+
+		$(document).on('click', '.accordion__block', function (e) {
+
+		})
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		$(document).on('click', '.service__masters .accordion__block', function (e) {
 			let clone = $(this).clone()
@@ -492,6 +493,8 @@
 				$('.time__btns_next').addClass('active')
 			}
 		})
+
+
 	})
 </script>
 {% endblock %}

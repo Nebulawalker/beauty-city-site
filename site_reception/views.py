@@ -54,7 +54,7 @@ def service(request):
 
 def handle_schedule(request):
     service_title = request.POST.get('service')
-    master_name = request.POST.get('master')
+    master_name = request.POST.get('master').strip()
     date = request.POST.get('date')
     date = datetime.strptime(date, '%Y-%m-%d').date()
 
