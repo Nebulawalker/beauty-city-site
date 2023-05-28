@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load common_tags %}
 
 <!-- Start head tag -->
 
@@ -157,7 +158,19 @@
 			  				<div class="masters__header_elmes">
 				  				<div class="masters__header_name">{{ master.name }}</div>
 					  			<img src="{% static 'img/rating.svg' %}" alt="rating" class="masters__header_rating"> <!-- Картинка на основании оценки !-->
-						  		<div class="masters__header_reviews">24 отзыва</div>	<!-- Счетчик оценок !-->
+									{% to_list '11' '12' '13' '14' as language_exceptions_tenth %}
+									{% to_list '2' '3' '4' as language_rules %}
+									{% with reviews=master.reviews|stringformat:"i" %}
+										{% if reviews in language_exceptions_tenth %}
+											<div class="masters__header_reviews">{{ master.reviews }} отзывов</div>
+										{% elif reviews|slice:"-1:" == '1' %}
+											<div class="masters__header_reviews">{{ master.reviews }} отзыв</div>
+										{% elif reviews|slice:"-1:" in language_rules %}
+											<div class="masters__header_reviews">{{ master.reviews }} отзыва</div>
+										{% else %}
+											<div class="masters__header_reviews">{{ master.reviews }} отзывов</div>
+										{% endif %}
+									{% endwith %}
 							  </div>
   						</div>
 	  					<div class="masters__main">
@@ -167,7 +180,7 @@
 					  	<div class="masters__footer fic">
 						  	<div class="masters__footer_block">
 							  	<div class="masters__footer_light">СТАЖ РАБОТЫ:</div>
-								  <div class="masters__footer_num">3 г. 10 мес.</div> <!-- Стаж !-->
+								  <div class="masters__footer_num">3 г. 10 мес.</div>
 							  </div>
 							  <button class="masters__footer_btn">Записаться</button>
 						  </div>
@@ -197,7 +210,7 @@
 			  			</div>
 				  	</div>
 				  </div>
-				  <div class="row reviewsSlider"> <!-- reviewsSlider -->
+				  <div class="row reviewsSlider">
 			  {% else %}
 				  <div class="row">
 			  {% endif %}
