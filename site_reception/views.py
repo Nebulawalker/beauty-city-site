@@ -22,10 +22,15 @@ def service_finally(request):
 
 def service(request):
     if request.method == 'POST':
-        saloon_title = request.POST.get('saloon')
-        service_name = request.POST.get('service')
+        service_title = request.POST.get('service')
         master_name = request.POST.get('master')
-        return HttpResponse(f'{saloon_title}, {service_name}, {master_name}')
+
+        orders = Order.objects.all()
+        if service_title:
+            orders = orders.filter(service__title=service_title)
+        if master_name:
+            orders = orders.filter(master__name=master_name)
+        return HttpResponse(f'{orders}, {master_name}, {type(master_name)}, {len(master_name)}')
 
     else:
         context = {

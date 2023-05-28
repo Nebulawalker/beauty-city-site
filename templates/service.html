@@ -287,7 +287,17 @@
 				let [saloon, service, master] = data
 				saloon = saloon.textContent.split('  ')[0]
 				service = service.textContent.split('  ')[0]
-				master = master.textContent
+				master = master.textContent.split('  ')[0]
+
+				if (saloon.includes('салон')) {
+					saloon = null
+				}
+				if (service.includes('услугу')) {
+					service = null
+				}
+				if (master.includes('мастера')) {
+					master = null
+				}
 
 				console.log(data)
 				console.log(saloon)
