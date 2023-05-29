@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .orm_commands import get_saloons, get_masters, get_services, get_reviews, get_masters_with_counted_reviews, get_timeslots
-from site_reception.models import Order, Saloon, Master, Service
+from site_reception.models import Order, Saloon, Master, Service, Client
 from django.template.loader import render_to_string
 from datetime import datetime
 
@@ -37,9 +37,9 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-def service_finally(request, pk):
-    order = Order.objects.get(id=pk)
-    data = {'order': order}
+def service_finally(request):
+    order = Order.objects.all().order_by('created_at').last()
+    context  = {'order': order}
     if request.method == 'POST':
         fname = request.POST.get('fname', '')
         tel = request.POST.get('tel')
@@ -49,7 +49,7 @@ def service_finally(request, pk):
             phone_number=tel
         )
         order.save()
-    return render(request, 'serviceFinally.html', context=data)
+    return render(request, 'serviceFinally.html', context)
 
 
 def service(request):
