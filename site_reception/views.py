@@ -37,8 +37,19 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-def service_finally(request):
-    return render(request, 'serviceFinally.html')
+def service_finally(request, pk):
+    order = Order.objects.get(id=pk)
+    data = {'order': order}
+    if request.method == 'POST':
+        fname = request.POST.get('fname', '')
+        tel = request.POST.get('tel')
+
+        client, created = Client.objects.get_or_create(
+            name=fname,
+            phone_number=tel
+        )
+        order.save()
+    return render(request, 'serviceFinally.html', context=data)
 
 
 def service(request):
