@@ -58,16 +58,18 @@ def handle_schedule(request):
     date = request.POST.get('date')
     date = datetime.strptime(date, '%Y-%m-%d').date()
     time = request.POST.get('time')
+    saloon = request.POST.get('saloon')
 
-    if service_title and master_name and date and time:
+    if service_title and master_name and date and time and saloon:
         Order.objects.create(
-            saloon=Saloon.objects.first(),
-            service=Service.objects.filter(title=service_title),
-            master=Master.objects.filter(name=master_name),
+            saloon=Saloon.objects.get(title=saloon),
+            service=Service.objects.get(title=service_title),
+            master=Master.objects.get(name=master_name),
             appointment_date=date,
             appointment_time=time,
         )
 
+    
     orders = Order.objects.all()
     if service_title:
         orders = orders.filter(service__title=service_title)

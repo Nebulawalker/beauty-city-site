@@ -123,7 +123,8 @@ class Order(models.Model):
         Client,
         verbose_name='Клиент',
         related_name='client',
-        on_delete=models.RESTRICT
+        on_delete=models.RESTRICT,
+        null=True
     )
     master = models.ForeignKey(
         Master,
