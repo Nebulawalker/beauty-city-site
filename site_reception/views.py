@@ -43,11 +43,11 @@ def service_finally(request, pk):
     if request.method == 'POST':
         fname = request.POST.get('fname', '')
         tel = request.POST.get('tel')
-
         client, created = Client.objects.get_or_create(
             name=fname,
             phone_number=tel
         )
+        order.client = client
         order.save()
     return render(request, 'serviceFinally.html', context)
 
