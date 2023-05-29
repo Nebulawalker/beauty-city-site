@@ -37,7 +37,7 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-def service_finally(request):
+def service_finally(request, pk):
     order = Order.objects.all().order_by('created_at').last()
     context  = {'order': order}
     if request.method == 'POST':
