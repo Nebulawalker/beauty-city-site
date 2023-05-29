@@ -59,6 +59,7 @@ def service(request):
         'masters': get_masters(),
         'time_slots': get_timeslots(),
         'ordered_timeslots': [],
+        'pk': '0'
     }
     return render(request, 'service.html', context)
 
@@ -96,6 +97,7 @@ def handle_schedule(request):
         {
             'ordered_timeslots': ordered_timeslots,
             'time_slots': get_timeslots(),
+            'pk': '3'
         }
     )
     return JsonResponse(html, safe=False)
