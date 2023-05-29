@@ -1,4 +1,4 @@
-{% load static %}
+
 
 <div> {{ times }}</div>
 {% for daytime, times in time_slots.items %}
@@ -6,15 +6,10 @@
 	<div class="time__elems_elem fic">
 		{% for time in times %}
 			{% if time not in ordered_timeslots %}
-				<button data-time="{{ time }}" class="time__elems_btn">{{ time }}</button>
+				<button id="{{ time }}" data-time="{{ time }}" class="time__elems_btn">{{ time }}</button>
 			{% endif %}
 		{% endfor %}
 	</div>
 {% endfor %}
 
 
-{% block extrascripts %}
-<script type="text/JavaScript" src="{%  static 'js/timeslotstoggle.js' %}">
-
-</script>
-{% endblock %}
